@@ -6,7 +6,6 @@ import * as React from 'react'
 function Greeting({initialName = ''}) {
   // 🐨 initialize the state to the value from localStorage
   // 💰 window.localStorage.getItem('name') || initialName
-  console.log('rendering')
   const [name, setName] = React.useState(
     () => window.localStorage.getItem('name') || initialName,
   )
@@ -16,7 +15,7 @@ function Greeting({initialName = ''}) {
   // 💰 window.localStorage.setItem('name', name)
   React.useEffect(() => {
     window.localStorage.setItem('name', name)
-  })
+  }, [name])
   function handleChange(event) {
     setName(event.target.value)
   }
@@ -32,7 +31,15 @@ function Greeting({initialName = ''}) {
 }
 
 function App() {
-  return <Greeting initialName="Sean" />
+  const [count, setCount] = React.useState(0)
+  return (
+    <>
+      <button onClick={() => setCount(previousCount => previousCount + 1)}>
+        {count}
+      </button>
+      <Greeting initialName="Sean" />
+    </>
+  )
 }
 
 export default App
